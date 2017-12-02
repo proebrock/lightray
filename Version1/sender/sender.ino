@@ -72,8 +72,9 @@ void send_data(uint8_t data) {
     delayMicroseconds(10);
 }
 
-
+uint8_t value = 0;
 void loop() {
-  send_data(0b01011001);
+  send_data(value);
+  value++;
   delay(500);
 }
