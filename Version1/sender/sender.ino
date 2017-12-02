@@ -3,7 +3,7 @@
 int output_pin = 2;
 int invert_output = 1; // 0 (laser high-active) or 1 (laser low-active)
 
-const unsigned long period_time_micros = 500; // min: around 380
+const unsigned long period_time_micros = 500;
 
 volatile uint64_t xfer_data = 0;
 volatile uint8_t xfer_num_bits = 0;
