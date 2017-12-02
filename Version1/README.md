@@ -6,7 +6,7 @@ The laser used is the Picotronic MD650-1-5(12x34), a laser module with a wavelen
 
 The light sensitive element is a photo diode Everlight PD333-3C/H0/L2. It is fast and the range of spectral bandwidth is from 400nm to 1100nm. Further details can be found on the manufacturer's website [here](http://www.everlight.com/file/ProductFile/PD333-3C-H0-L2.pdf). It can be ordered from Conrad under order number [156409-62](https://www.conrad.ch/de/fotodiode-5-mm-1200-nm-everlight-opto-pd333-3chol2-156409.html).
 
-The schematics is straight forward. Using an Arduino Uno the laser module can be directly fixed attached to the Arduino. On the receiver side the photo diode is used in reverse direction with a pullup resistor.
+The schematics is straight forward. Using an Arduino Uno the laser module can be directly fixed attached to the Arduino. On the receiver side the photo diode is used in reverse direction with a pull-up resistor.
 
 ![Schematics](schematics.png)
 
@@ -18,9 +18,10 @@ The electrical signal on the receiver side is pretty strong. The pulse width use
 
 ## Data flow
 
-A single data byte is split into two nibbles and each is encoded using [Hamming(7,4) encoding](https://en.wikipedia.org/wiki/Hamming(7,4)) with an additional parity bit. So in each nibble a single bit error can be corrected and up to two bit erros can be detected. This gives 16 bits of data. This is now [Manchester encoded](https://en.wikipedia.org/wiki/Manchester_code) to create a self-clocking signal. To ensure proper detection of start and end of a message we add a start and stop bit (each encode in 2 bits). In total we get 36 bitsof data to transmit. On the receiver side the encodings are decoded in reverse order.
+A single data byte is split into two nibbles and each is encoded using [Hamming(7,4) encoding](https://en.wikipedia.org/wiki/Hamming(7,4)) with an additional parity bit. So in each nibble a single bit error can be corrected and up to two bit erros can be detected. This gives 16 bits of data. This is now [Manchester encoded](https://en.wikipedia.org/wiki/Manchester_code) to create a self-clocking signal. To ensure proper detection of start and end of a message we add a start and stop bit (each encode in 2 bits). In total we get 36 bits of data to transmit. On the receiver side the encodings are decoded in reverse order.
 
 ![Data flow](data_flow.png)
+
 
 
 ## Example
@@ -41,6 +42,9 @@ Those bytes are now Manchester encoded. We use the convention from IEEE 802.4: A
 Because the modulation input of the laser is low-active, we have to invert this information. If this data is send, it looks like this
 
 ![Signal](signal.png) 
+
+The pulse width in the example is 500µs. The time between the two markers is 17ms, which is 34 cycles. We have to add the pulses at the beginning and the end (signal high for each), to get our 36 cycles equals 36 bits.
+
 
 
 ## Speed
