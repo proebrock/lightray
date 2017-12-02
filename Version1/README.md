@@ -23,6 +23,25 @@ A single data byte is split into two nibbles and each is encoded using [Hamming(
 ![Data flow](data_flow.png)
 
 
+## Example
+
+Let's send the byte 01011001. The byte is split into its two nibbles and each is Hamming(7,4) encoded:
+```
+0101 -> 01010101
+1001 -> 10011001
+```
+The lower 4 bits contain the data itself, the upper four bits contain the parity bits with the MSB the additional parity. The results are concatenated giving 16 bits of data, written here sets of four
+```
+0101 0101 1001 1001
+```
+Those bytes are now Manchester encoded. We use the convention from IEEE 802.4: A '0' is encoded as a falling edge, a '1' as a raising edge. Since we are going to send the data starting with the LSB and ending with the MSB, a '0' is encoded as "01" and a '1' as "10". The starting bit is '1' (encoded as "10") and the stop bit is '0' (encoded as "01").
+```
+01 01100110 01100110 10010110 10010110 10
+```
+Because the modulation input of the laser is low-active, we have to invert this information. If this data is send, it looks like this
+
+![Signal](signal.png) 
+
 
 ## Speed
 
