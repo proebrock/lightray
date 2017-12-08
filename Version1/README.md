@@ -41,12 +41,12 @@ Those bytes are now Manchester encoded. We use the convention from IEEE 802.4: A
 ```
 Because the modulation input of the laser is low-active, we have to invert this information. If this data is send, it looks like this
 
-![Signal](signal.png) 
+![Signal](signal.png)
 
 The pulse width in the example is 500µs. The time between the two markers is 17ms, which is 34 cycles. We have to add the pulses at the beginning and the end (signal high for each), to get our 36 cycles equals 36 bits.
 
 
 
-## Speed
+## Performance
 
 A single byte of data is encoded in 36 bits. With an example pulse width of 500µs, this means in a second we can transfer 55.56 bytes, the speed is 444 bauds. That is not too impressive, but Version 1 is supposed to be a proof-of-concept, no more.
