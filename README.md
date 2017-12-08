@@ -5,3 +5,4 @@ In this project I am trying to learn something about transferring data by modula
 I will test different hardware and software implementations. Here is a list:
 
 * [Version 1](Version1/README.md)
+* [Version 2](Version2/README.md)
