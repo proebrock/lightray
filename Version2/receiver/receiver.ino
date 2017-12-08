@@ -32,17 +32,22 @@ void callback() {
 
   if (!valid) {
     xfer_data[active] = 0;
-    xfer_num_bits[active] = 0;
+    xfer_num_bits[active] = 1;
 	  return;
   }
 
-  xfer_data[active] = xfer_data[active] << num_cycles;
-  xfer_num_bits[active] += num_cycles;
-  if (input_state == HIGH) {
-    xfer_data[active] |= ((1 << num_cycles) - 1);
+  if (xfer_num_bits[active] > 0) {
+    xfer_data[active] = xfer_data[active] << num_cycles;
+    if (input_state == HIGH) {
+      xfer_data[active] |= ((1 << num_cycles) - 1);
+    }
+    xfer_num_bits[active] += num_cycles;
+  }
+  else {
+    xfer_num_bits[active] = 1;
   }
 
-  if (xfer_num_bits[active] >= 10) {
+  if (xfer_num_bits[active] >= 11) {
     active ^= 1;
     xfer_data[active] = 0;
     xfer_num_bits[active] = 0;
@@ -63,7 +68,7 @@ void setup() {
 uint8_t receive_data() {
   uint8_t last_active = active;
   while (last_active == active)
-    delayMicroseconds(10);
+    delayMicroseconds(1);
   return (xfer_data[last_active] >> 1) & 0xff;
 }
 

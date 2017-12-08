@@ -37,12 +37,13 @@ void send_data(uint8_t data) {
   xfer_num_bits = 11;
   interrupts();
   while (xfer_num_bits > 0)
-    delayMicroseconds(10);
+    delayMicroseconds(1);
 }
 
 uint8_t value = 0;
 void loop() {
   send_data(value);
   value+=1;
-  delay(10);
+  if ((value & 0b111111) == 0)
+    delay(10);
 }
