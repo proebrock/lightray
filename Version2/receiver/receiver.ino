@@ -74,18 +74,24 @@ uint8_t receive_data() {
 
 uint8_t last_data = 0;
 bool first = true;
+unsigned long num_recv = 0;
+unsigned long num_err = 0;
 void loop() {
   uint8_t data = receive_data();
+  num_recv++;
   if (!first) {
     if ((data != (last_data + 1)) && (data!=0 || last_data!=0xff)) {
-      Serial.print("Error at 0x");
-      Serial.print(data, HEX);
-      Serial.print(" = 0b");
-      Serial.println(data, BIN);
+      num_err++;
     }
   }
   else {
     first = false;
+  }
+  if ((num_recv % 1000) == 0) {
+    Serial.print("Received ");
+    Serial.print(num_recv);
+    Serial.print(", Errors ");
+    Serial.println(num_err);
   }
   last_data = data;
 }
