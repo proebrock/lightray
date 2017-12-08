@@ -3,13 +3,13 @@
 const int input_pin = 2;
 // Period time in microseconds as power of 2, e.g. 8 -> 2^8 us = 256 us
 // Must match sender configuration!
-const int period_time_micros_power = 8;
+const int period_time_micros_power = 7;
 // -----------------------------------
 
-const uint8_t valid_bits = 2;
-const uint8_t round_bits = period_time_micros_power - valid_bits;
-const unsigned long valid_pattern = ((1ul << valid_bits) - 1) << round_bits;
+const uint8_t round_bits = 6;
+const uint8_t valid_bits = period_time_micros_power - round_bits;
 const unsigned long round_pattern = (1ul << round_bits) - 1;
+const unsigned long valid_pattern = ((1ul << valid_bits) - 1) << round_bits;
 
 volatile unsigned long last_micros = 0;
 volatile uint8_t active = 0;
@@ -67,25 +67,28 @@ uint8_t receive_data() {
   return (xfer_data[last_active] >> 1) & 0xff;
 }
 
-/*uint8_t last_data = 0;
+uint8_t last_data = 0;
 bool first = true;
 void loop() {
   uint8_t data = receive_data();
   if (!first) {
-    if (data != (last_data + 1)) {
-      Serial.println("err");
+    if ((data != (last_data + 1)) && (data!=0 || last_data!=0xff)) {
+      Serial.print("Error at 0x");
+      Serial.print(data, HEX);
+      Serial.print(" = 0b");
+      Serial.println(data, BIN);
     }
   }
   else {
     first = false;
   }
   last_data = data;
-}*/
+}
 
-void loop() {
+/*void loop() {
   uint8_t data = receive_data();
   Serial.print(data, HEX);
   Serial.print("   ");
   Serial.println(data, BIN);
-}
+}*/
 

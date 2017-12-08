@@ -4,7 +4,7 @@ const int output_pin = 2;
 // Output inversion: 0 (laser high-active) or 1 (laser low-active)
 const int invert_output = 1;
 // Period time in microseconds as power of 2, e.g. 8 -> 2^8 us = 256 us
-const int period_time_micros_power = 8;
+const int period_time_micros_power = 7;
 // -----------------------------------
 
 #include "TimerOne.h"
@@ -44,5 +44,5 @@ uint8_t value = 0;
 void loop() {
   send_data(value);
   value+=1;
-  delay(100);
+  delay(10);
 }
