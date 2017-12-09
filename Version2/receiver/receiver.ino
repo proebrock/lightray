@@ -1,9 +1,11 @@
 // ---------- Configuration ----------
 // Input pin, must be interrupt-capable pin
 const int input_pin = 2;
+// Input inversion: 0 (laser high-active) or 1 (laser low-active, e.g. using pull-up)
+const int invert_input = 1;
 // Period time in microseconds as power of 2, e.g. 8 -> 2^8 us = 256 us
 // Must match sender configuration!
-const int period_time_micros_power = 7;
+const int period_time_micros_power = 7; // tested with 7, 8, 9
 // -----------------------------------
 
 const uint8_t round_bits = 6;
@@ -38,7 +40,7 @@ void callback() {
 
   if (xfer_num_bits[active] > 0) {
     xfer_data[active] = xfer_data[active] << num_cycles;
-    if (input_state == HIGH) {
+    if (input_state == invert_input) {
       xfer_data[active] |= ((1 << num_cycles) - 1);
     }
     xfer_num_bits[active] += num_cycles;
