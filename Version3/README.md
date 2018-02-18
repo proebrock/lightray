@@ -69,19 +69,19 @@ Here is in short what you have to do:
 
 * Disable Linux usage of under **Interfacing options** and **Serial**
 
-  ```
+  ```bash
   sudo raspi-config
   ```
 
 * Add line to /boot/config.txt to restore ```/dev/ttyAMA0``` to GPIOs 14 (TX, pin 8) and 15 (RX, pin 10)
 
-  ```
+  ```bash
   dtoverlay=pi3-disable-bt
   ```
 
 * Stop Bluetooth services
 
-  ```
+  ```bash
   sudo systemctl disable hciuart
   ```
 
@@ -101,7 +101,7 @@ Then execute a make command in the receiver directory
 make all
 ```
 
-and you are good to start the receiver_signal
+#### Running the receiver
 
 ```bash
 python3 receiver.py
